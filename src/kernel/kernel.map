@@ -1,0 +1,222 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+_CurrentProcess     0x10              obj\sched.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD obj\startup.o
+LOAD obj\main.o
+LOAD obj\console.o
+LOAD obj\sched.o
+LOAD obj\keyboard.o
+LOAD obj\klib.o
+LOAD obj\mouse.o
+LOAD obj\floppy.o
+LOAD obj\pci.o
+LOAD obj\ne2000.o
+LOAD obj\ip.o
+LOAD obj\arp.o
+LOAD obj\icmp.o
+LOAD obj\udp.o
+LOAD obj\vga.o
+LOAD obj\ide.o
+
+.text           0x00009000     0x5ef0
+ *(.text)
+ .text          0x00009000      0x63f obj\startup.o
+                0x0000949a                _DISABLE_IRQ
+                0x0000944a                _STOP_PROCESSOR
+                0x00009469                _ENABLE_IRQ
+                0x00009533                _SET_SCHEDULER_BACKLINK
+                0x00009577                _INPORT_BYTE
+                0x00009573                _DISABLE_INTERRUPTS
+                0x000095c7                _MEMCPY
+                0x000095eb                _MEMCLR
+                0x0000944e                _IDLE_LOOP
+                0x000095b9                _OUTPORT_DWORD
+                0x00009000                EntryPoint
+                0x00009575                _ENABLE_INTERRUPTS
+                0x00009540                _CLEAR_BUSY_BIT
+                0x0000944c                _HALT_PROCESSOR
+                0x00009583                _OUTPORT_BYTE
+                0x00009451                _SET_INTERRUPT_MASK
+                0x00009570                _RAISE_INT0
+                0x0000945f                _GET_INTERRUPT_MASK
+                0x000094b8                _END_OF_INT
+                0x000095ad                _INPORT_DWORD
+                0x00009516                _CALL_TSS
+                0x00009558                _SET_BUSY_BIT
+                0x0000959e                _OUTPORT_WORD
+                0x000094c2                _ADD_TASK
+                0x00009421                Exception13
+                0x00009591                _INPORT_WORD
+ *fill*         0x0000963f        0x1 00
+ .text          0x00009640      0xaf0 obj\main.o
+                0x0000968a                _kernel_main
+                0x000097bd                _GenericIRQHandler
+                0x00009fa5                _StartupProcess_EntryPoint
+                0x00009713                _GPFExceptionHandler
+                0x00009bbc                _ProcessCommandLine
+                0x00009877                _kfree
+                0x0000a023                _WaitingProcess_EntryPoint
+                0x0000a07c                _ReportAvailableMemory
+                0x00009888                _DisplayPrompt
+                0x00009640                _mem_Initialise
+                0x0000964d                _ConsoleProcess2_EntryPoint
+                0x000098a0                _GetCommandLine
+                0x00009f6e                _ConsoleProcess3_EntryPoint
+                0x00009812                _kmalloc
+ .text          0x0000a130      0x5a0 obj\console.o
+                0x0000a49d                _con_StreamWriteDecDWORD
+                0x0000a51e                _con_StreamWriteHexBYTE
+                0x0000a55e                _con_Reset
+                0x0000a130                _con_UpdateCursor
+                0x0000a2d9                _con_WriteChar
+                0x0000a60e                _con_DumpMemoryBlock
+                0x0000a2c6                _con_DecCursorPosition
+                0x0000a1cc                _con_ScrollUp
+                0x0000a453                _con_StreamWriteHexDWORD
+                0x0000a5b6                _con_SetForegroundColour
+                0x0000a3fd                _con_StreamWriteHexDigit
+                0x0000a1af                _con_SetCursorPosition
+                0x0000a3b3                _con_StreamBackspaceChar
+                0x0000a5dc                _con_SetBackgroundColour
+                0x0000a35a                _con_StreamRawWriteChar
+                0x0000a32b                _con_StreamWriteChar
+                0x0000a23f                _con_IncCursorPosition
+                0x0000a3ca                _con_StreamWriteString
+ .text          0x0000a6d0      0x750 obj\sched.o
+                0x0000a886                _sch_ScheduleInterrupt
+                0x0000ae00                _sch_MainLoop
+                0x0000a730                _sch_CreateProcess
+                0x0000a9ed                _sch_ProcessWait
+                0x0000ac07                _sch_DumpIDT
+                0x0000a82f                _sch_EndProcess
+                0x0000aa11                _sch_ProcessNotify
+                0x0000ac7d                _sch_DumpKernelTSS
+                0x0000a6d0                _sch_InitScheduler
+                0x0000ab82                _IdleProcess_EntryPoint
+                0x0000ab91                _sch_DumpGDT
+                0x0000aa7c                _sch_DumpProcessList
+ .text          0x0000ae20      0x230 obj\keyboard.o
+                0x0000b015                _getc
+                0x0000af12                _key_GetNumCharsInBuffer
+                0x0000ae35                _key_InitDevice
+                0x0000ae5c                _key_IRQHandler
+                0x0000af7f                _key_GetCharFromBuffer
+                0x0000afd1                _key_PutCharInBuffer
+ .text          0x0000b050       0xa0 obj\klib.o
+                0x0000b050                _strcmp
+                0x0000b0d4                _memclr
+                0x0000b0b8                _memcpy
+                0x0000b094                _strlen
+ .text          0x0000b0f0      0x560 obj\mouse.o
+                0x0000b13a                _SendKeyboardCommandWithResult
+                0x0000b1d3                _SendMouseCommandWithData
+                0x0000b17a                _SendMouseCommand
+                0x0000b3ec                _mse_IRQHandler
+                0x0000b0f0                _SendKeyboardCommandWithData
+                0x0000b268                _mse_InitDevice
+                0x0000b20f                _SendMouseCommandWithResult
+ .text          0x0000b650      0x610 obj\floppy.o
+                0x0000b99c                _flp_ReadSector
+                0x0000bb68                _flp_InitDevice
+                0x0000b7ca                _flp_SeekTrack
+                0x0000bc42                _flp_IRQHandler
+ .text          0x0000bc60      0x730 obj\pci.o
+                0x0000be22                _pci_DeviceScan
+ .text          0x0000c390      0xa40 obj\ne2000.o
+                0x0000cd8c                _net_GetLocalMAC
+                0x0000c869                _net_ReadPacket
+                0x0000c4cb                _net_InitDevice
+                0x0000ca0b                _net_ReadData
+                0x0000cc14                _net_SendPacket
+                0x0000c725                _net_IRQHandler
+ .text          0x0000cdd0      0x520 obj\ip.o
+                0x0000d0b7                _ip_SendPacket
+                0x0000d073                _ip_GetMACFromIP
+                0x0000cf7a                _ip_ProcessPacket
+                0x0000cdf8                _ip_PacketHandler
+ .text          0x0000d2f0      0x550 obj\arp.o
+                0x0000d3d6                _arp_GenerateReply
+                0x0000d534                _arp_HandleReply
+                0x0000d77b                _arp_DumpARPTable
+                0x0000d2f0                _arp_GenerateRequest
+                0x0000d707                _arp_LookupMAC
+                0x0000d5c6                _arp_PacketHandler
+                0x0000d67f                _arp_AddEntry
+ .text          0x0000d840      0x280 obj\icmp.o
+                0x0000d9c9                _icmp_ReceiveEchoRequest
+                0x0000d92e                _icmp_SendEchoRequest
+                0x0000da72                _icmp_PacketHandler
+                0x0000d840                _OnesComplementChecksum
+ .text          0x0000dac0       0xb0 obj\udp.o
+                0x0000dac0                _udp_PacketHandler
+ .text          0x0000db70     0x1180 obj\vga.o
+                0x0000e87f                _vga_DrawRectangle
+                0x0000ec63                _vga_SetPalette
+                0x0000db70                _vga_SetMode
+                0x0000e99a                _vga_DrawFilledRectangle
+                0x0000e694                _vga_DrawLine
+                0x0000e50e                _vga_DrawPixel
+                0x0000ebab                _vga_FillScreen
+ .text          0x0000ecf0      0x200 obj\ide.o
+                0x0000eed3                _ide_Identify
+                0x0000ed3a                _ide_IRQHandler
+                0x0000ed0e                _ide_InitDevice
+                0x0000ed52                _ide_ReadSector
+
+.data           0x0000eef0      0x180
+ *(.data)
+ .data          0x0000eef0       0x10 obj\main.o
+ .data          0x0000ef00       0x10 obj\console.o
+ .data          0x0000ef10       0xc0 obj\keyboard.o
+ .data          0x0000efd0       0x20 obj\mouse.o
+ .data          0x0000eff0       0x10 obj\ne2000.o
+                0x0000eff0                _global_NE2000Addr
+ .data          0x0000f000       0x10 obj\ip.o
+ .data          0x0000f010       0x10 obj\arp.o
+ .data          0x0000f020       0x40 obj\vga.o
+                0x0000f020                _g_640x480x16
+ .data          0x0000f060       0x10 obj\ide.o
+                0x0000f060                _global_IDE1_BaseAddr
+
+.bss            0x0000f070      0x3a0
+ *(.bss)
+ .bss           0x0000f070       0x20 obj\console.o
+ .bss           0x0000f090       0x30 obj\sched.o
+ .bss           0x0000f0c0      0x150 obj\keyboard.o
+ .bss           0x0000f210       0x60 obj\mouse.o
+ .bss           0x0000f270       0x20 obj\floppy.o
+ .bss           0x0000f290      0x120 obj\ne2000.o
+ .bss           0x0000f3b0       0x10 obj\ip.o
+ .bss           0x0000f3c0       0x30 obj\arp.o
+ .bss           0x0000f3f0       0x10 obj\vga.o
+ COMMON         0x0000f400       0x10 obj\sched.o
+                                  0x0 (size before relaxing)
+                0x0000f400                _CurrentProcess
+OUTPUT(obj\kernel.bin binary)
+
+.comment        0x0000f410      0x12c
+ .comment       0x0000f410       0x14 obj\main.o
+ .comment       0x0000f424       0x14 obj\console.o
+ .comment       0x0000f438       0x14 obj\sched.o
+ .comment       0x0000f44c       0x14 obj\keyboard.o
+ .comment       0x0000f460       0x14 obj\klib.o
+ .comment       0x0000f474       0x14 obj\mouse.o
+ .comment       0x0000f488       0x14 obj\floppy.o
+ .comment       0x0000f49c       0x14 obj\pci.o
+ .comment       0x0000f4b0       0x14 obj\ne2000.o
+ .comment       0x0000f4c4       0x14 obj\ip.o
+ .comment       0x0000f4d8       0x14 obj\arp.o
+ .comment       0x0000f4ec       0x14 obj\icmp.o
+ .comment       0x0000f500       0x14 obj\udp.o
+ .comment       0x0000f514       0x14 obj\vga.o
+ .comment       0x0000f528       0x14 obj\ide.o
